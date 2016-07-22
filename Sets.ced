@@ -1,0 +1,22 @@
+'/bootstrap':defAtom(set::'/bootstrap':type).
+'/bootstrap':signature(subset(A,B)::'/bootstrap':pred,[A::set,B::set]).
+'/bootstrap':signature(user(Name)::set,[Name::'/bootstrap':string]).
+'/util':behavior(subset(user(Name),user(Name))::'/bootstrap':pred,!'A user should have permissions for his own stuff', (subset(user(Name),user(Name)),subset(user(!'user1'),user(!'user1')),\+subset(user(!'user1'),user(!'user2')))).
+subset(user(Name),user(Name)):-builtin:true.
+'/bootstrap':signature(group(Name)::set,[Name::'/bootstrap':string]).
+'/util':behavior(subset(group(Name),group(Name))::'/bootstrap':pred,!'A group is a subset of itself',subset(group(Name),group(Name))).
+subset(group(Name),group(Name)):-builtin:true.
+'/bootstrap':signature(intersect(A,B)::set,[A::set,B::set]).
+'/util':behavior(intersect(A,B)::set,!'Set intersection', (subset(intersect(A,B),A),subset(intersect(A,B),B),subset(intersect(user(!'user1'),user(!'user2')),user(!'user1')),subset(intersect(user(!'user1'),user(!'user2')),user(!'user2')))).
+subset(intersect(A,B),A):-builtin:true.
+subset(intersect(A,B),B):-builtin:true.
+subset(C,intersect(A,B)):-subset(C,A),subset(C,B).
+'/bootstrap':signature(union(A,B)::set,[A::set,B::set]).
+'/util':behavior(union(A,B)::set,!'Union of sets',_).
+subset(union(A,B),C):-subset(A,C),subset(B,C).
+subset(A,union(A,B)):-builtin:true.
+subset(B,union(A,B)):-builtin:true.
+'/bootstrap':defAtom(top::set).
+subset(top,A):-builtin:true.
+'/bootstrap':defAtom(bottom::set).
+subset(A,bottom):-builtin:true.
