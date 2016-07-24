@@ -1,0 +1,14 @@
+'/bootstrap':signature(contains(A,L,T)::'/bootstrap':pred,[A::T,L::'/bootstrap':list(T),T::'/bootstrap':type]).
+'/util':behavior(contains(!'user1',[!'user2',!'user1',!'user3'],'/bootstrap':string)::'/bootstrap':pred,!'The contains predicate succeeds iff A is in the list', (contains(!'user1',[!'user2',!'user1',!'user3'],'/bootstrap':string),contains(!'user1',[!'user1'],'/bootstrap':string),\+contains(!'user1',[],'/bootstrap':string))).
+contains(A,[],T):-builtin:fail.
+contains(A,[A|AS],T):-builtin:true.
+contains(A,[B|AS],T):-contains(A,AS,T).
+'/bootstrap':signature(intersects(A,B,T)::'/bootstrap':pred,[A::'/bootstrap':list(T),B::'/bootstrap':list(T),T::'/bootstrap':type]).
+'/util':behavior(intersects(A,B,T)::'/bootstrap':pred,!'The intersects predicate succeeds iff A\'s & B\'s intersection is non-empty',_).
+'/util':behavior(intersects([],[],T)::'/bootstrap':pred,!'The empty list insersects with nothing', (\+intersects([],[],'/bootstrap':string),\+intersects([],[!'user1'],'/bootstrap':string),\+intersects([!'user1'],[],'/bootstrap':string))).
+'/util':behavior(intersects(AS,BS,T)::'/bootstrap':pred,!'Examples of intersecting sets', (intersects([!'user1'],[!'user1',!'user2'],'/bootstrap':string),intersects([!'user1'],[!'user2',!'user1',!'user3'],'/bootstrap':string))).
+intersects([],_,_):-builtin:fail.
+intersects(_,[],_):-builtin:fail.
+intersects([A|AS],[A|BS],T):-builtin:true.
+intersects([A|AS],BS,T):-intersects(AS,BS,T).
+intersects(AS,[B|BS],T):-intersects(AS,BS,T).
