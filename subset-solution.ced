@@ -1,0 +1,17 @@
+'/util':behavior(subset(intersect(A,B),A,T)::'/bootstrap':pred,!'Intersection of sets: Should be able to extract fields',subset(intersect(intersect(atom(!'A'),atom(!'B')),atom(!'C')),atom(!'A'),'/bootstrap':string)).
+subset(A,A,T):-builtin:true.
+subset(intersect(A,B),C,T):-subset(A,C,T).
+subset(intersect(A,B),C,T):-subset(B,C,T).
+'/util':behavior(subset(intersect(intersect(A,B),C),intersect(A,C),T)::'/bootstrap':pred,!'Introduction of intersection', (subset(intersect(intersect(atom(!'A'),atom(!'B')),atom(!'C')),intersect(atom(!'A'),atom(!'C')),'/bootstrap':string),\+subset(atom(!'A'),intersect(atom(!'A'),atom(!'B')),'/bootstrap':string))).
+subset(C,intersect(A,B),T):-subset(C,A,T),subset(C,B,T).
+'/util':behavior(subset(A,top,T)::'/bootstrap':pred,!'Everything is a subset of the universe (top)',subset(atom(!'A'),top,'/bootstrap':string)).
+subset(A,top,T):-builtin:true.
+'/util':behavior(subset(A,union(A,B),T)::'/bootstrap':pred,!'Union of sets: Introduction',subset(atom(!'A'),union(atom(!'A'),atom(!'B')),'/bootstrap':string)).
+subset(C,union(A,B),T):-subset(C,A,T).
+subset(C,union(A,B),T):-subset(C,B,T).
+'/util':behavior(subset(union(A,intersect(A,B)),A,T)::'/bootstrap':pred,!'Elimination of union',subset(union(atom(!'A'),intersect(atom(!'A'),atom(!'B'))),atom(!'A'),'/bootstrap':string)).
+subset(union(A,B),C,T):-subset(A,C,T),subset(B,C,T).
+'/util':behavior(subset(bottom,A,T)::'/bootstrap':pred,!'The empty set is a subset of every set',subset(bottom,atom(!'A'),'/bootstrap':string)).
+subset(bottom,A,T):-builtin:true.
+'/util':behavior(subset(intersect(atom(A),atom(B)),bottom,T)::'/bootstrap':pred,!'Contradiction: Empty set', (subset(intersect(atom(!'A'),atom(!'B')),bottom,'/bootstrap':string),subset(intersect(atom(!'A'),atom(!'B')),atom(!'C'),'/bootstrap':string))).
+subset(intersect(atom(A),atom(B)),C,T):- \+builtin:equals(A::T,B::T).
